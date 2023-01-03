@@ -2,6 +2,7 @@ use crate::*;
 use tempfile::TempDir;
 mod test_issue_1;
 mod test_issue_3;
+mod test_issue_4;
 
 #[test]
 fn supported_format() {

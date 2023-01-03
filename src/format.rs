@@ -136,6 +136,7 @@ pub enum MajorFormat {
   OGG,
   MPC2K,
   RF64,
+  MPEG,
 }
 
 #[allow(non_camel_case_types)]
@@ -168,6 +169,9 @@ pub enum SubtypeFormat {
   ALAC_20,
   ALAC_24,
   ALAC_32,
+  MPEG_LAYER_I,
+  MPEG_LAYER_II,
+  MPEG_LAYER_III,
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
@@ -205,6 +209,7 @@ pub fn flags_to_major_format(flags: c_int) -> Option<MajorFormat> {
     sndfile_sys::SF_FORMAT_OGG => Some(MajorFormat::OGG),
     sndfile_sys::SF_FORMAT_MPC2K => Some(MajorFormat::MPC2K),
     sndfile_sys::SF_FORMAT_RF64 => Some(MajorFormat::RF64),
+    sndfile_sys::SF_FORMAT_MPEG => Some(MajorFormat::MPEG),
     _ => None,
   }
 }
@@ -238,6 +243,9 @@ pub fn flags_to_subtype_format(flags: c_int) -> Option<SubtypeFormat> {
     sndfile_sys::SF_FORMAT_ALAC_20 => Some(SubtypeFormat::ALAC_20),
     sndfile_sys::SF_FORMAT_ALAC_24 => Some(SubtypeFormat::ALAC_24),
     sndfile_sys::SF_FORMAT_ALAC_32 => Some(SubtypeFormat::ALAC_32),
+    sndfile_sys::SF_FORMAT_MPEG_LAYER_I => Some(SubtypeFormat::MPEG_LAYER_I),
+    sndfile_sys::SF_FORMAT_MPEG_LAYER_II => Some(SubtypeFormat::MPEG_LAYER_II),
+    sndfile_sys::SF_FORMAT_MPEG_LAYER_III => Some(SubtypeFormat::MPEG_LAYER_III),
     _ => None,
   }
 }
@@ -279,6 +287,7 @@ pub fn major_format_to_flags(major_format: MajorFormat) -> c_int {
     MajorFormat::OGG => sndfile_sys::SF_FORMAT_OGG,
     MajorFormat::MPC2K => sndfile_sys::SF_FORMAT_MPC2K,
     MajorFormat::RF64 => sndfile_sys::SF_FORMAT_RF64,
+    MajorFormat::MPEG => sndfile_sys::SF_FORMAT_MPEG,
   }
 }
 
@@ -311,6 +320,9 @@ pub fn subtype_format_to_flags(subtype_format: SubtypeFormat) -> c_int {
     SubtypeFormat::ALAC_20 => sndfile_sys::SF_FORMAT_ALAC_20,
     SubtypeFormat::ALAC_24 => sndfile_sys::SF_FORMAT_ALAC_24,
     SubtypeFormat::ALAC_32 => sndfile_sys::SF_FORMAT_ALAC_32,
+    SubtypeFormat::MPEG_LAYER_I => sndfile_sys::SF_FORMAT_MPEG_LAYER_I,
+    SubtypeFormat::MPEG_LAYER_II => sndfile_sys::SF_FORMAT_MPEG_LAYER_II,
+    SubtypeFormat::MPEG_LAYER_III => sndfile_sys::SF_FORMAT_MPEG_LAYER_III,
   }
 }
 
@@ -394,5 +406,6 @@ pub fn default_subtype(major_format: MajorFormat) -> Option<SubtypeFormat> {
     MajorFormat::OGG => Some(SubtypeFormat::VORBIS),
     MajorFormat::MPC2K => Some(SubtypeFormat::PCM_16),
     MajorFormat::RF64 => Some(SubtypeFormat::PCM_16),
+    MajorFormat::MPEG => Some(SubtypeFormat::MPEG_LAYER_III),
   }
 }
